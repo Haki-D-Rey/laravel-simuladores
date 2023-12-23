@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,9 +28,17 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        $user = $request ->user();
+
+        $user -> tokens()->delete();
+
+        $token = $user->createToken('api-token');
+        info($token);
+
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
+        // return response()->json(["user" => $user,"token" => $token->plainTextToken]);
     }
 
     /**
