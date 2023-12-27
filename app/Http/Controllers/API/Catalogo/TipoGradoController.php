@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\Catalogo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\TipoGrado;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TipoGradoController extends Controller

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
+
+Route::get('/auth/token', [AuthenticatedSessionController::class, 'getToken'])->name('auth.token');
+Route::get('/auth/token-expiracion',[AuthenticatedSessionController::class,'tiempoRestanteParaExpirar'])->name('auth.time');
 require __DIR__.'/auth.php';
