@@ -2,18 +2,20 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\CategoriaExporter;
 use App\Filament\Resources\CategoriaResource\Pages;
 use App\Models\Categoria;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
-use Closure;
-use Filament\Forms\Get;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Filament\Tables\Filters\SelectFilter;
 
 class CategoriaResource extends Resource
 {
@@ -60,7 +62,10 @@ class CategoriaResource extends Resource
                 Hidden::make('id_usuariocreacion')
                     ->default(Auth::id()) // Establece el valor por defecto con el ID del usuario autenticado
                     ->required(),
-                Hidden::make('id_usuariomodificacion'),
+                Select::make('users_id')
+                    ->relationship(name: 'users', titleAttribute: 'name')
+                    ->visibleOn('edit')
+                    ->label('Usuario Modificacion'),
             ])->columns(2);
     }
 
@@ -69,8 +74,6 @@ class CategoriaResource extends Resource
 
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('N°')
-                    ->rowIndex(isFromZero: false),
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable()
                     ->label('Descripcion'),
@@ -94,8 +97,23 @@ class CategoriaResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->label('Fecha Modificacion'),
+                Tables\Columns\TextColumn::make('users.name')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Usuario Modificacion'),
             ])
-            ->filters([])
+            ->filters([
+                SelectFilter::make('id')
+                    ->options(Categoria::pluck('nombre', 'id'))
+                    ->label('Nombre Categoria')
+                    ->searchable(),
+
+                SelectFilter::make('estado')
+                    ->options([
+                        '1' => 'Estado Activo',
+                        '0' => 'Estado Inactivo',
+                    ])
+                    ->attribute('estado')
+            ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -103,6 +121,7 @@ class CategoriaResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
                 ]),
             ]);
     }

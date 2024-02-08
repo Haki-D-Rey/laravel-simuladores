@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Categoria extends Model
 {
@@ -23,7 +24,7 @@ class Categoria extends Model
         'created_at',
         'updated_at',
         'id_usuariocreacion',
-        'id_usuariomodificacion'
+        'user_id'
     ];
 
 
@@ -40,5 +41,8 @@ class Categoria extends Model
         'estado' => 'boolean',
     ];
 
-
+    public function users(): BelongsTo
+    {
+        return $this -> belongsTo(User::class);
+    }
 }
