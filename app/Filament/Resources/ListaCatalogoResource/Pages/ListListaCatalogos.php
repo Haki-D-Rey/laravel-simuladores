@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Filament\Resources\CategoriaResource\Pages;
+namespace App\Filament\Resources\ListaCatalogoResource\Pages;
 
-use App\Filament\Imports\CategoriaImporter;
-use App\Filament\Resources\CategoriaResource;
+use App\Filament\Imports\ListaCatalogoImporter;
+use App\Filament\Resources\ListaCatalogoResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
 use Filament\Actions\ImportAction;
-
+use Filament\Resources\Pages\ListRecords;
 use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 use pxlrbt\FilamentExcel\Columns\Column;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
-class ListCategorias extends ListRecords
+class ListListaCatalogos extends ListRecords
 {
-    protected static string $resource = CategoriaResource::class;
+    protected static string $resource = ListaCatalogoResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -23,14 +22,14 @@ class ListCategorias extends ListRecords
             ->label('Crear')
             ->icon('heroicon-m-plus'),
             ImportAction::make()
-                ->importer(CategoriaImporter::class)
+                ->importer(ListaCatalogoImporter::class)
                 ->icon('heroicon-m-arrow-up-tray')
                 ->label('Importar')
                 ->color('info'),
             ExportAction::make()
                 ->exports([
                     ExcelExport::make()->withColumns([
-                        Column::make('nombre')->heading('Nombre de la Categoría'),
+                        Column::make('descripcion')->heading('Nombre de la Categoría'),
                         Column::make('codigointerno')->heading('Código'),
                         Column::make('estado')->heading('Estado Categoría')
                             ->formatStateUsing(fn ($state) => $state == 1 ? 'Estado Activo' : 'Estado Inactivo'),
@@ -39,7 +38,7 @@ class ListCategorias extends ListRecords
                         Column::make('users.name')->heading('Usuario Modificacion'),
                     ])
                         ->withWriterType(\Maatwebsite\Excel\Excel::XLSX)
-                        ->withFilename(date('Y-m-d') . '-Categoria-export'),
+                        ->withFilename(date('Y-m-d') . '-Lista Catalogo-export'),
                 ])
         ];
     }

@@ -19,35 +19,35 @@ return new class extends Migration
 
             $table->bigIncrements('id');
             $table->string('descripcion', 1028)->nullable(false);
-            $table->string('codigo_interno', 64)->nullable(false)->unique();
+            $table->string('codigointerno', 64)->nullable(false)->unique();
             $table->boolean('estado')->nullable(false);
             $table->string('abreviacion', 256)->nullable(false);
             $table->timestamps();
             // $table->renameColumn('created_at', 'FechaCreacion');
             // $table->renameColumn('updated_at', 'FechaModificacion');
             $table->unsignedInteger('id_usuariocreacion')->nullable(true);
-            $table->unsignedInteger('id_usuariomodificacion')->nullable(true);
+            $table->unsignedInteger('users_id')->nullable(true);
         });
 
         //Esquema Tipo Profesion
         Schema::create('catalogo.TipoProfesion', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion', 1028)->nullable(false);
-            $table->string('codigo_interno', 64)->nullable(false)->unique();
+            $table->string('codigointerno', 64)->nullable(false)->unique();
             $table->boolean('estado')->nullable(false);
             $table->string('abreviacion', 256)->nullable(false);
             $table->timestamps();
             // $table->renameColumn('created_at', 'FechaCreacion');
             // $table->renameColumn('updated_at', 'FechaModificacion');
             $table->unsignedInteger('id_usuariocreacion')->nullable(true);
-            $table->unsignedInteger('id_usuariomodificacion')->nullable(true);
+            $table->unsignedInteger('users_id')->nullable(true);
         });
 
         //Esquema de Tipo Identificacion
         Schema::create('catalogo.TipoIdentificacion', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion', 1028)->nullable(false);
-            $table->string('codigo_interno', 64)->nullable(false)->unique();
+            $table->string('codigointerno', 64)->nullable(false)->unique();
             $table->boolean('estado')->nullable(false);
             $table->string('abreviacion', 256)->nullable(false);
             $table->timestamps();
@@ -55,57 +55,57 @@ return new class extends Migration
             // $table->renameColumn('updated_at', 'FechaModificacion');
 
             $table->unsignedInteger('id_usuariocreacion')->nullable(true);
-            $table->unsignedInteger('id_usuariomodificacion')->nullable(true);
+            $table->unsignedInteger('users_id')->nullable(true);
         });
 
         //Esquema de Representante Institucional
         Schema::create('catalogo.RepresentanteInstitucional', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion', 1028)->nullable(false);
-            $table->string('codigo_interno', 64)->nullable(false)->unique();
+            $table->string('codigointerno', 64)->nullable(false)->unique();
             $table->boolean('estado')->nullable(false);
             $table->string('abreviacion', 256)->nullable(false);
             $table->timestamps();
             // $table->renameColumn('created_at', 'FechaCreacion');
             // $table->renameColumn('updated_at', 'FechaModificacion');
             $table->unsignedInteger('id_usuariocreacion')->nullable(true);
-            $table->unsignedInteger('id_usuariomodificacion')->nullable(true);
+            $table->unsignedInteger('users_id')->nullable(true);
         });
 
         //Esquema de estado del Producto
         Schema::create('catalogo.EstadoProducto', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion', 1028)->nullable(false);
-            $table->string('codigo_interno', 64)->nullable(false)->unique();
+            $table->string('codigointerno', 64)->nullable(false)->unique();
             $table->boolean('estado')->nullable(false);
             $table->timestamps();
             // $table->renameColumn('created_at', 'FechaCreacion');
             // $table->renameColumn('updated_at', 'FechaModificacion');
             $table->unsignedInteger('id_usuariocreacion')->nullable(true);
-            $table->unsignedInteger('id_usuariomodificacion')->nullable(true);
+            $table->unsignedInteger('users_id')->nullable(true);
         });
 
         //Esquema de Tipo de Usuario
         Schema::create('catalogo.TipoUsuario', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion', 1028)->nullable(false);
-            $table->string('codigo_interno', 64)->nullable(false)->unique();
+            $table->string('codigointerno', 64)->nullable(false)->unique();
             $table->boolean('estado')->nullable(false);
             $table->timestamps();
             $table->unsignedInteger('id_usuariocreacion')->nullable(true);
-            $table->unsignedInteger('id_usuariomodificacion')->nullable(true);
+            $table->unsignedInteger('users_id')->nullable(true);
         });
 
         Schema::create('catalogo.ListaCatalogo', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion', 1028)->nullable(false);
-            $table->string('codigo_interno', 64)->nullable(false);
+            $table->string('codigointerno', 64)->nullable(false);
             $table->boolean('estado')->nullable(false);
             $table->timestamps();
             // $table->renameColumn('created_at', 'FechaCreacion');
             // $table->renameColumn('updated_at', 'FechaModificacion');
             $table->unsignedInteger('id_usuariocreacion')->nullable(true);
-            $table->unsignedInteger('id_usuariomodificacion')->nullable(true);
+            $table->unsignedInteger('users_id')->nullable(true);
         });
 
         Schema::create('catalogo.ListaDetalleCatalogo', function (Blueprint $table) {
@@ -114,7 +114,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_catalogo');
             $table->unsignedBigInteger('id_tipocatalogo');
             $table->string('valor_catalogo', 1028)->nullable(false);
-            $table->string('codigo_interno', 64)->nullable(false);
+            $table->string('codigointerno', 64)->nullable(false);
             $table->string('abreviacion', 64)->nullable(false);
             $table->boolean('estado')->nullable(false);
             $table->timestamps();
@@ -122,7 +122,7 @@ return new class extends Migration
             // $table->renameColumn('updated_at', 'FechaModificacion');
 
             $table->unsignedInteger('id_usuariocreacion')->nullable(true);
-            $table->unsignedInteger('id_usuariomodificacion')->nullable(true);
+            $table->unsignedInteger('users_id')->nullable(true);
 
             // Foreign keys
             $table->foreign('id_catalogo')->references('id')->on('catalogo.ListaCatalogo')
@@ -141,17 +141,17 @@ return new class extends Migration
             $table->foreign('id_tipocatalogo', 'fk_estadoproducto')->references('id')->on('catalogo.EstadoProducto')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->foreign('codigo_interno', 'fk_codigointerno_tipogrado')->references('codigo_interno')->on('catalogo.TipoGrado')
+            $table->foreign('codigointerno', 'fk_codigointerno_tipogrado')->references('codigointerno')->on('catalogo.TipoGrado')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('codigo_interno', 'fk_codigointerno_tipoprofesion')->references('codigo_interno')->on('catalogo.TipoProfesion')
+            $table->foreign('codigointerno', 'fk_codigointerno_tipoprofesion')->references('codigointerno')->on('catalogo.TipoProfesion')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('codigo_interno', 'fk_codigointerno_tipoidentificacion')->references('codigo_interno')->on('catalogo.TipoIdentificacion')
+            $table->foreign('codigointerno', 'fk_codigointerno_tipoidentificacion')->references('codigointerno')->on('catalogo.TipoIdentificacion')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('codigo_interno', 'fk_codigointerno_tipousuario')->references('codigo_interno')->on('catalogo.TipoUsuario')
+            $table->foreign('codigointerno', 'fk_codigointerno_tipousuario')->references('codigointerno')->on('catalogo.TipoUsuario')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('codigo_interno', 'fk_codigointerno_representante')->references('codigo_interno')->on('catalogo.RepresentanteInstitucional')
+            $table->foreign('codigointerno', 'fk_codigointerno_representante')->references('codigointerno')->on('catalogo.RepresentanteInstitucional')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('codigo_interno', 'fk_codigointerno_estadoproducto')->references('codigo_interno')->on('catalogo.EstadoProducto')
+            $table->foreign('codigointerno', 'fk_codigointerno_estadoproducto')->references('codigointerno')->on('catalogo.EstadoProducto')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

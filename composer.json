@@ -12,6 +12,7 @@
         "filament/actions": "^3.2",
         "filament/filament": "^3.2",
         "filament/notifications": "^3.2",
+        "filament/tables": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "konnco/filament-import": "^2.0",
         "laravel/framework": "^10.10",

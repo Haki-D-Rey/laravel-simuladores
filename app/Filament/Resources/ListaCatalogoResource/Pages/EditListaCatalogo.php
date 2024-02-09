@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\CategoriaResource\Pages;
+namespace App\Filament\Resources\ListaCatalogoResource\Pages;
 
-use App\Filament\Resources\CategoriaResource;
+use App\Filament\Resources\ListaCatalogoResource;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
-class EditCategoria extends EditRecord
+class EditListaCatalogo extends EditRecord
 {
-    protected static string $resource = CategoriaResource::class;
+    protected static string $resource = ListaCatalogoResource::class;
 
-    protected static ?string $title = 'Editar Categoria';
+    protected static ?string $title = 'Editar Lista Catalogos';
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
