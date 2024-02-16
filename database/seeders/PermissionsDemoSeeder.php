@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -20,44 +21,49 @@ class PermissionsDemoSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['edit-category' => 'edit category']);
-        Permission::create(['delete-category' => 'delete category']);
-        Permission::create(['view-category' => 'view category']);
-        Permission::create(['list-category' => 'list category']);
-        Permission::create(['nav-category' => 'nav category']);
+        Permission::create(['guard_name' => 'web','name' => 'edit category']);
+        Permission::create(['guard_name' => 'web','name' => 'delete category']);
+        Permission::create(['guard_name' => 'web','name' => 'view category']);
+        Permission::create(['guard_name' => 'web','name' => 'list category']);
+        Permission::create(['guard_name' => 'web','name' => 'nav category']);
 
-        Permission::create(['import-categroy' => 'import category']);
-        Permission::create(['export-category' => 'export category']);
+        Permission::create(['guard_name' => 'web','name' => 'import category']);
+        Permission::create(['guard_name' => 'web','name' => 'export category']);
 
         // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'user']);
-        $role1->givePermissionTo('edit articles');
-        $role1->givePermissionTo('delete articles');
+        $role1 = Role::create(['guard_name' => 'web','name' => 'user']);
+        $role1->givePermissionTo('view category');
+        $role1->givePermissionTo('list category');
+        $role1->givePermissionTo('view category');
+        $role1->givePermissionTo('nav category');
 
-        $role2 = Role::create(['name' => 'admin']);
-        $role2->givePermissionTo('publish articles');
-        $role2->givePermissionTo('unpublish articles');
+        // $role2 = Role::create(['name' => 'admin']);
+        // $role2->givePermissionTo('publish articles');
+        // $role2->givePermissionTo('unpublish articles');
 
-        $role3 = Role::create(['name' => 'Super-Admin']);
+        $role3 = Role::create(['guard_name' => 'web','name' => 'Super-Admin']);
+        $role3->givePermissionTo(Permission::all());
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
         // create demo users
         $user = \App\Models\User::factory()->create([
             'name' => 'Cesar Cuadra',
             'email' => 'cesar.cuadra@hospitalmilitar.com.ni',
+            'password' => Hash::make('&ecurity23')
         ]);
         $user->assignRole($role3);
 
         $user = \App\Models\User::factory()->create([
-            'name' => '',
-            'email' => 'admin@example.com',
+            'name' => 'user',
+            'email' => 'user@yopmail.com',
+            'password' => Hash::make('12345678')
         ]);
-        $user->assignRole($role2);
+        $user->assignRole($role1);
 
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Example Super-Admin User',
-            'email' => 'superadmin@example.com',
-        ]);
-        $user->assignRole($role3);
+        // $user = \App\Models\User::factory()->create([
+        //     'name' => 'Example Super-Admin User',
+        //     'email' => 'superadmin@example.com',
+        // ]);
+        // $user->assignRole($role3);
     }
 }

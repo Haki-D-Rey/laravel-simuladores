@@ -17,6 +17,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ListaCatalogoResource extends Resource
@@ -141,7 +142,7 @@ class ListaCatalogoResource extends Resource
             'create' => Pages\CreateListaCatalogo::route('/create'),
             'view' => Pages\ViewListaCatalogo::route('/{record}'),
             'edit' => Pages\EditListaCatalogo::route('/{record}/edit'),
-            'catalago' => Pages\CrearCatalogos::route('/{record}/create-catalogo'),
+            'catalago' => Pages\CrearCatalogos::route('/{record}/{name}'),
 
         ];
     }

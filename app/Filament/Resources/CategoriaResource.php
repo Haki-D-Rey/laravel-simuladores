@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Exports\CategoriaExporter;
 use App\Filament\Resources\CategoriaResource\Pages;
 use App\Models\Categoria;
+use Filament\Facades\Filament;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
@@ -116,7 +117,7 @@ class CategoriaResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

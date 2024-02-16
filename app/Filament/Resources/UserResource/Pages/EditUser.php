@@ -17,4 +17,11 @@ class EditUser extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['is_verified'] = strtotime($data['email_verified_at']) ? true : false;
+
+        return $data;
+    }
 }

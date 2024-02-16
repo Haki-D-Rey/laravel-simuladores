@@ -31,8 +31,6 @@ class ListaTipoUsuarios extends Component implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
 
-    protected static ?string $title = 'Editar Lista Catalogos';
-
     public function render()
     {
         return view('livewire.lista-tipo-usuarios');
@@ -85,9 +83,10 @@ class ListaTipoUsuarios extends Component implements HasTable, HasForms
                     ->attribute('estado')
             ])
             ->actions([
-                ViewAction::make(),
+                ViewAction::make()
+                    ->form(TipoUsuarioForm::schema()),
                 EditAction::make()
-                ->form(TipoUsuarioForm::schema()),
+                    ->form(TipoUsuarioForm::schema()),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -108,19 +107,19 @@ class ListaTipoUsuarios extends Component implements HasTable, HasForms
                     ->label('Importar')
                     ->color('info'),
                 ExportAction::make()
-                ->exports([
-                    ExcelExport::make()->withColumns([
-                        Column::make('descripcion')->heading('Nombre Tipo Usuario'),
-                        Column::make('codigointerno')->heading('Código'),
-                        Column::make('estado')->heading('Estado Tipo Usuario')
-                            ->formatStateUsing(fn ($state) => $state == 1 ? 'Estado Activo' : 'Estado Inactivo'),
-                        Column::make('created_at')->heading('Fecha de Creación'),
-                        Column::make('updated_at')->heading('Fecha de Modificación'),
-                        Column::make('users.name')->heading('Usuario Modificacion'),
+                    ->exports([
+                        ExcelExport::make()->withColumns([
+                            Column::make('descripcion')->heading('Nombre Tipo Usuario'),
+                            Column::make('codigointerno')->heading('Código'),
+                            Column::make('estado')->heading('Estado Tipo Usuario')
+                                ->formatStateUsing(fn ($state) => $state == 1 ? 'Estado Activo' : 'Estado Inactivo'),
+                            Column::make('created_at')->heading('Fecha de Creación'),
+                            Column::make('updated_at')->heading('Fecha de Modificación'),
+                            Column::make('users.name')->heading('Usuario Modificacion'),
+                        ])
+                            ->withWriterType(\Maatwebsite\Excel\Excel::XLSX)
+                            ->withFilename(date('Y-m-d') . '-Lista Catalogo-export'),
                     ])
-                        ->withWriterType(\Maatwebsite\Excel\Excel::XLSX)
-                        ->withFilename(date('Y-m-d') . '-Lista Catalogo-export'),
-                ])
             ]);
     }
 }
