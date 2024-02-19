@@ -50,7 +50,6 @@ class UserResource extends Resource
                 TextInput::make('password')
                     ->label('Contraseña')
                     ->password()
-                    // https://filamentphp.com/docs/3.x/forms/advanced#auto-hashing-password-field
                     ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
                     ->dehydrated(fn (?string $state): bool => filled($state))
                     ->required(fn (string $operation): bool => $operation === 'create')

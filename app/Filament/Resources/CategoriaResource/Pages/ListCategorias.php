@@ -26,7 +26,8 @@ class ListCategorias extends ListRecords
                 ->importer(CategoriaImporter::class)
                 ->icon('heroicon-m-arrow-up-tray')
                 ->label('Importar')
-                ->color('info'),
+                ->color('info')
+                ->hidden( !auth()->user()->hasRole('User') || !auth()->user()->hasPermissionTo('import categoria')),
             ExportAction::make()
                 ->exports([
                     ExcelExport::make()->withColumns([
@@ -41,6 +42,7 @@ class ListCategorias extends ListRecords
                         ->withWriterType(\Maatwebsite\Excel\Excel::XLSX)
                         ->withFilename(date('Y-m-d') . '-Categoria-export'),
                 ])
+                ->hidden( !auth()->user()->hasRole('User') || !auth()->user()->hasPermissionTo('export categoria')),
         ];
     }
 }

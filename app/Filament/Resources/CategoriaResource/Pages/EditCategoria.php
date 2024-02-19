@@ -16,7 +16,7 @@ class EditCategoria extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $data['id_usuariomodificacion'] = auth()->id();
+        $data['users_id'] = $data['users_id']  ?  $data['users_id'] : auth()->id();
         return $data;
     }
 

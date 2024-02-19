@@ -2,42 +2,42 @@
 
 namespace App\Livewire;
 
-use App\Filament\Imports\TipoUsuarioImporter;
-use App\Models\TipoUsuario;
-use App\Services\TipoUsuarioForm;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
+use App\Filament\Imports\TipoEstadoProductoImporter;
+use App\Models\TipoEstadoProducto;
+use App\Services\TipoEstadoProductoForm;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Table;
-use Livewire\Component;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ImportAction;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
+use Livewire\Component;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use pxlrbt\FilamentExcel\Columns\Column;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
-
-class ListaTipoUsuarios extends Component implements HasTable, HasForms
+class ListaEstadoProducto extends Component implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
 
     public function render()
     {
-        return view('livewire.lista-tipo-usuarios');
+        return view('livewire.lista-estado-producto');
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(TipoUsuario::query())
+            ->query(TipoEstadoProducto::query())
             ->columns([
                 TextColumn::make('descripcion')
                     ->searchable()
@@ -68,7 +68,7 @@ class ListaTipoUsuarios extends Component implements HasTable, HasForms
             ])
             ->filters([
                 SelectFilter::make('id')
-                    ->options(TipoUsuario::pluck('descripcion', 'id'))
+                    ->options(TipoEstadoProducto::pluck('descripcion', 'id'))
                     ->label('Por Catalogo')
                     ->searchable()
                     ->multiple(),
@@ -82,9 +82,9 @@ class ListaTipoUsuarios extends Component implements HasTable, HasForms
             ])
             ->actions([
                 ViewAction::make()
-                    ->form(TipoUsuarioForm::schema()),
+                    ->form(TipoEstadoProductoForm::schema()),
                 EditAction::make()
-                    ->form(TipoUsuarioForm::schema()),
+                    ->form(TipoEstadoProductoForm::schema()),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -95,12 +95,12 @@ class ListaTipoUsuarios extends Component implements HasTable, HasForms
             ->headerActions([
                 CreateAction::make()
                     ->createAnother(false)
-                    ->model(TipoUsuario::class)
-                    ->form(TipoUsuarioForm::schema())
+                    ->model(TipoEstadoProducto::class)
+                    ->form(TipoEstadoProductoForm::schema())
                     ->label('Crear')
                     ->icon('heroicon-m-plus'),
                 ImportAction::make()
-                    ->importer(TipoUsuarioImporter::class)
+                    ->importer(TipoEstadoProductoImporter::class)
                     ->icon('heroicon-m-arrow-up-tray')
                     ->label('Importar')
                     ->color('info'),
